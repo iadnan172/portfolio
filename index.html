@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADNAN PATHAN | DevOps Engineer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background -->
+    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+    <div class="particles"></div>
+
+    <div class="terminal-container">
+
+        <!-- Terminal Window Header -->
+        <div class="terminal-header">
+            <div class="window-controls">
+                <div class="control close"></div>
+                <div class="control minimize"></div>
+                <div class="control maximize"></div>
+            </div>
+
+            <div class="terminal-title">
+                adnan@portfolio:~$
+            </div>
+
+            <div class="status-indicators">
+                <button class="sound-toggle-btn" id="soundToggle" title="Toggle Typing Sound" aria-label="Toggle Typing Sound">
+                    <span class="sound-icon" id="soundIcon">🔊</span>
+                </button>
+                <span class="status-secure-text">SECURE</span>
+                <div class="status-dot active"></div>
+            </div>
+        </div>
+
+        <!-- Terminal Main Scrollable Body -->
+        <div class="terminal-body" id="terminalBody">
+            <div class="scanline"></div>
+
+            <!-- Initial Hero / Welcome Banner inside scroll container -->
+            <div class="terminal-hero" id="terminalHero">
+                <div class="ascii-art-wrapper">
+                    <pre class="ascii-art" id="asciiArt"></pre>
+                </div>
+
+                <div class="hero-text-block">
+                    <div class="output-text hero-line">
+                        ⚡ Welcome to <span class="highlight">ADNAN PATHAN's</span> Terminal Portfolio
+                    </div>
+                    <div class="output-text hero-line">
+                        🎯 <span class="info-text">DevOps Engineer</span> | <span class="warning-text">Cloud Engineer</span> | <span class="error-text">Site Reliability Engineer</span>
+                    </div>
+                    <div class="hero-instructions">
+                        <div class="output-text">Type <span class="command-text">'whois adnan'</span> to know more about me</div>
+                        <div class="output-text">Type <span class="command-text">'help'</span> for available commands</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Command Outputs -->
+            <div id="terminalOutput"></div>
+        </div>
+
+        <!-- Fixed Input Area -->
+        <div class="input-area">
+            <span class="input-prompt">adnan@portfolio:~$</span>
+            <input
+                type="text"
+                id="commandInput"
+                placeholder="Enter command..."
+                autofocus
+                autocomplete="off"
+                spellcheck="false"
+            >
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                🔒 SSH: Connected
+            </div>
+            <div class="status-item">
+                🐳 Docker: Running
+            </div>
+            <div class="status-item">
+                ☸️ K8s: Active
+            </div>
+            <div class="status-item">
+                🕐 <span id="currentTime"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
