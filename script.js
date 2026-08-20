@@ -746,7 +746,7 @@ async function showResume() {
     block.className = 'output-block';
 
     // Local resume PDF path for direct browser download
-    const RESUME_URL = 'resume.pdf';
+    const RESUME_URL = 'DEVOPS_ADNAN_PATHAN_RESUME.pdf';
 
     block.innerHTML = `
         <div class="output-title">📄 RESUME DOWNLOAD</div>
@@ -758,9 +758,9 @@ async function showResume() {
                 </div>
                 <div class="output-text" id="resumePct">0%</div>
             </div>
-            <div class="success" id="resumeReady" style="display:none;">✅ Download started: ADNAN_PATHAN_RESUME.pdf</div>
+            <div class="success" id="resumeReady" style="display:none;">✅ Download started: DEVOPS_ADNAN_PATHAN_RESUME.pdf</div>
             <div id="resumeBtnWrap" style="display:none; margin-top:8px;">
-                <a href="${RESUME_URL}" download="ADNAN_PATHAN_RESUME.pdf" class="resume-download-btn">📥 Download Resume (PDF)</a>
+                <a href="${RESUME_URL}" download="DEVOPS_ADNAN_PATHAN_RESUME.pdf" class="resume-download-btn">📥 Download Resume (PDF)</a>
             </div>
         </div>
     `;
@@ -784,7 +784,7 @@ async function showResume() {
             // Trigger direct file download without opening Google Drive or external tabs
             const link = document.createElement('a');
             link.href = RESUME_URL;
-            link.download = 'ADNAN_PATHAN_RESUME.pdf';
+            link.download = 'DEVOPS_ADNAN_PATHAN_RESUME.pdf';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
