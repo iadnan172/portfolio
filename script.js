@@ -584,15 +584,15 @@ async function showHelp() {
                 <span class="help-cmd">cat [file]</span><span class="help-desc">View file contents (e.g. cat skills.txt)</span>
                 <span class="help-cmd">skills</span><span class="help-desc">Show animated skill progress bars</span>
                 <span class="help-cmd">stats</span><span class="help-desc">Fetch live GitHub stats via API</span>
-                <span class="help-cmd">resume</span><span class="help-desc">Download my resume PDF</span>
+                <span class="help-cmd">resume / cv</span><span class="help-desc">Directly download my resume PDF</span>
                 <span class="help-cmd">theme --list</span><span class="help-desc">List available color themes</span>
                 <span class="help-cmd">theme [name]</span><span class="help-desc">Switch theme: hacker | cyberpunk | matrix | dracula | nord</span>
-                <span class="help-cmd">send-message</span><span class="help-desc">Send me a message directly from the terminal</span>
+                <span class="help-cmd">send-message / email</span><span class="help-desc">Send me a message directly from the terminal</span>
                 <span class="help-cmd">ssh adnan</span><span class="help-desc">Simulate SSH connection (easter egg 🥚)</span>
                 <span class="help-cmd">ping adnan</span><span class="help-desc">Simulate network ping & open Gmail compose</span>
                 <span class="help-cmd">neofetch</span><span class="help-desc">Display system info overview</span>
                 <span class="help-cmd">matrix</span><span class="help-desc">Toggle matrix rain background</span>
-                <span class="help-cmd">clear</span><span class="help-desc">Clear screen output buffer</span>
+                <span class="help-cmd">clear / cls</span><span class="help-desc">Clear screen output buffer</span>
                 <span class="help-cmd">help</span><span class="help-desc">Show this command menu</span>
             </div>
             <div class="output-paragraph" style="margin-top: 10px;">💡 Tip: Press <span class="command-text">Tab</span> to autocomplete | <span class="command-text">↑↓</span> to browse history</div>
@@ -745,26 +745,22 @@ async function showResume() {
     const block = document.createElement('div');
     block.className = 'output-block';
 
-    // ⚠️  REPLACE THIS URL WITH YOUR GOOGLE DRIVE PDF DIRECT DOWNLOAD LINK
-    // Format: https://drive.google.com/uc?export=download&id=YOUR_FILE_ID
-    const RESUME_URL = 'https://drive.google.com/uc?export=download&id=1I0G9iwgBssGvfh4_Pl54v5K0Hz0BK40R';
+    // Local resume PDF path for direct browser download
+    const RESUME_URL = 'resume.pdf';
 
     block.innerHTML = `
         <div class="output-title">📄 RESUME DOWNLOAD</div>
         <div class="timeline-card">
-            <div class="output-text">📄 Fetching latest resume...</div>
+            <div class="output-text">📄 Preparing resume download...</div>
             <div class="resume-progress">
                 <div class="resume-progress-bar-track">
                     <div class="resume-progress-bar-fill" id="resumeBar"></div>
                 </div>
                 <div class="output-text" id="resumePct">0%</div>
             </div>
-            <div class="success" id="resumeReady" style="display:none;">✅ Download started: DEVOPS_ADNAN_PATHAN_RESUME.pdf</div>
+            <div class="success" id="resumeReady" style="display:none;">✅ Download started: ADNAN_PATHAN_RESUME.pdf</div>
             <div id="resumeBtnWrap" style="display:none; margin-top:8px;">
-                ${RESUME_URL !== 'https://drive.google.com/uc?export=download&id=1I0G9iwgBssGvfh4_Pl54v5K0Hz0BK40R'
-                    ? `<a href="${RESUME_URL}" target="_blank" class="resume-download-btn" download>📥 Download Resume (PDF)</a>`
-                    : `<div class="error-text"></div>`
-                }
+                <a href="${RESUME_URL}" download="ADNAN_PATHAN_RESUME.pdf" class="resume-download-btn">📥 Download Resume (PDF)</a>
             </div>
         </div>
     `;
@@ -778,21 +774,24 @@ async function showResume() {
 
     let current = 0;
     const interval = setInterval(() => {
-        current += Math.random() * 18 + 4;
+        current += Math.random() * 25 + 15;
         if (current >= 100) {
             current = 100;
             clearInterval(interval);
             ready.style.display = 'block';
             btnWrap.style.display = 'block';
 
-            // Auto-open if real URL is set
-            if (RESUME_URL !== '') {
-                window.open(RESUME_URL, '_blank');
-            }
+            // Trigger direct file download without opening Google Drive or external tabs
+            const link = document.createElement('a');
+            link.href = RESUME_URL;
+            link.download = 'ADNAN_PATHAN_RESUME.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
         bar.style.width = current + '%';
         pct.textContent = Math.floor(current) + '%';
-    }, 120);
+    }, 80);
 }
 
 // ===================== COMMAND: ssh adnan (Feature 4 — Easter Egg) =====================
@@ -856,9 +855,10 @@ async function startSendMessage() {
                 <span class="command-text">Step 1/3</span> — Enter your <span class="highlight">name</span>:
             </div>
         </div>
+        <div class="output-paragraph" style="margin-top:4px; font-size:0.85em; opacity:0.85;">💡 Tip: Press <span class="command-text">Esc</span> to cancel at any time.</div>
     `;
     appendOutputElement(block);
-    commandInput.placeholder = 'Your name...';
+    commandInput.placeholder = 'Your name... (Press Esc to cancel)';
 }
 
 async function handleSendMessageStep(value) {
@@ -911,50 +911,76 @@ async function handleSendMessageStep(value) {
 
             const sendingLine = document.createElement('div');
             sendingLine.className = 'form-status-line';
-            sendingLine.innerHTML = `<span class="loading"></span> Sending to work.adnanpathan@gmail.com...`;
+            sendingLine.innerHTML = `<span class="loading"></span> Sending message to ${portfolioData.contact.email}...`;
             card.appendChild(sendingLine);
         }
 
-        // Send via Formspree
+        const recipientEmail = portfolioData.contact.email;
+        let isSuccess = false;
+
+        // Try API submission if formspree/web3forms configured
         try {
-            const res = await fetch('https://formspree.io/f/xwkgjvkp', {
+            const formEndpoint = portfolioData.contact.formspreeUrl || 'https://api.web3forms.com/submit';
+            const payload = portfolioData.contact.formspreeUrl ? {
+                name: sendMessageData.name,
+                email: sendMessageData.email,
+                message: sendMessageData.message
+            } : {
+                access_key: portfolioData.contact.web3formsKey || '0da2f0d9-482a-4318-ba28-3e473e16b9b3',
+                subject: `Portfolio Message from ${sendMessageData.name}`,
+                from_name: sendMessageData.name,
+                email: sendMessageData.email,
+                message: sendMessageData.message
+            };
+
+            const res = await fetch(formEndpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify({
-                    name: sendMessageData.name,
-                    email: sendMessageData.email,
-                    message: sendMessageData.message
-                })
+                body: JSON.stringify(payload)
             });
 
-            const sendingLine = card ? card.querySelector('.form-status-line:last-child') : null;
-
             if (res.ok) {
-                if (card) {
-                    if (sendingLine) sendingLine.remove();
-                    const done = document.createElement('div');
-                    done.className = 'success';
-                    done.style.marginTop = '8px';
-                    done.innerHTML = '✅ Message sent successfully! I\'ll get back to you soon. 🚀';
-                    card.appendChild(done);
-
-                    const toast = document.createElement('div');
-                    toast.className = 'toast';
-                    toast.innerHTML = `📨 Message sent from ${escapeHtml(sendMessageData.name)}!`;
-                    document.body.appendChild(toast);
-                    setTimeout(() => toast.remove(), 4000);
+                const json = await res.json();
+                if (json.success !== false) {
+                    isSuccess = true;
                 }
-            } else {
-                throw new Error('Send failed');
             }
-        } catch (err) {
+        } catch (e) {
+            isSuccess = false;
+        }
+
+        const sendingLine = card ? card.querySelector('.form-status-line:last-child') : null;
+        if (sendingLine) sendingLine.remove();
+
+        const subject = encodeURIComponent(`Portfolio Message from ${sendMessageData.name}`);
+        const body = encodeURIComponent(`Sender Name: ${sendMessageData.name}\nSender Email: ${sendMessageData.email}\n\nMessage:\n${sendMessageData.message}`);
+        const mailtoUrl = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+
+        if (isSuccess) {
             if (card) {
-                const sendingLine = card.querySelector('.form-status-line:last-child');
-                if (sendingLine) sendingLine.remove();
-                const errLine = document.createElement('div');
-                errLine.className = 'error-text';
-                errLine.innerHTML = `❌ Failed to send. <a href="mailto:${portfolioData.contact.email}" class="command-text">Click here to email directly.</a>`;
-                card.appendChild(errLine);
+                const done = document.createElement('div');
+                done.className = 'success';
+                done.style.marginTop = '8px';
+                done.innerHTML = `✅ Message sent successfully! I'll get back to you soon. 🚀`;
+                card.appendChild(done);
+
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.innerHTML = `📨 Message sent from ${escapeHtml(sendMessageData.name)}!`;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 4000);
+            }
+        } else {
+            // Auto open mail client with pre-filled details so message is NEVER lost
+            window.location.href = mailtoUrl;
+
+            if (card) {
+                const done = document.createElement('div');
+                done.className = 'success';
+                done.style.marginTop = '8px';
+                done.innerHTML = `✅ Opening mail client for <strong>${recipientEmail}</strong>!<br>
+                <div class="output-paragraph" style="margin-top:6px;">If your mail app didn't open: <a href="${mailtoUrl}" class="command-text" style="text-decoration:underline;">Click here to send email directly</a></div>`;
+                card.appendChild(done);
             }
         }
 
@@ -1105,11 +1131,11 @@ async function processCommand(commandStr) {
             await showGitHubStats();
             break;
 
-        case command === 'resume':
+        case command === 'resume' || command === 'cv' || command === 'download-resume':
             await showResume();
             break;
 
-        case command === 'send-message':
+        case command === 'send-message' || command === 'email' || command === 'mail' || command === 'message':
             await startSendMessage();
             break;
 
@@ -1121,7 +1147,7 @@ async function processCommand(commandStr) {
             await handleTheme(rawCommand.substring(5).trim() || '');
             break;
 
-        case command === 'clear':
+        case command === 'clear' || command === 'cls':
             terminalOutput.innerHTML = '';
             break;
 
@@ -1159,9 +1185,9 @@ async function processCommand(commandStr) {
 
 // ===================== INPUT EVENT LISTENERS =====================
 const ALL_COMMANDS = [
-    'whois adnan', 'about', 'ls', 'skills', 'stats', 'resume',
-    'send-message', 'ssh adnan', 'ssh', 'ping adnan', 'ping',
-    'neofetch', 'matrix', 'clear', 'help',
+    'whois adnan', 'about', 'ls', 'skills', 'stats', 'resume', 'cv', 'download-resume',
+    'send-message', 'email', 'mail', 'message', 'ssh adnan', 'ssh', 'ping adnan', 'ping',
+    'neofetch', 'matrix', 'clear', 'cls', 'help',
     'theme --list', 'theme hacker', 'theme cyberpunk', 'theme matrix', 'theme dracula', 'theme nord',
     'cd education', 'cd experience', 'cd projects', 'cd contact', 'cd skills',
     'cat skills.txt', 'cat education.txt', 'cat experience.txt', 'cat projects.txt', 'cat contact.txt'
@@ -1170,7 +1196,20 @@ const ALL_COMMANDS = [
 commandInput.addEventListener('keydown', function(e) {
     playMechanicalKeySound(e.key);
 
-    if (e.key === 'Enter') {
+    if (e.key === 'Escape') {
+        if (isInSendMessageFlow) {
+            isInSendMessageFlow = false;
+            sendMessageStep = 0;
+            sendMessageData = {};
+            commandInput.placeholder = 'Enter command... (Tab to autocomplete)';
+            const block = document.createElement('div');
+            block.className = 'output-block';
+            block.innerHTML = '<div class="warning-text">⚠️ Message input cancelled.</div>';
+            appendOutputElement(block);
+        }
+        commandInput.value = '';
+
+    } else if (e.key === 'Enter') {
         const val = commandInput.value;
         commandInput.value = '';
         processCommand(val);
