@@ -4,16 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADNAN PATHAN | DevOps Engineer</title>
+
+    <!-- ===================== SEO / Open Graph Meta Tags ===================== -->
+    <meta name="description" content="Adnan Pathan — AWS-Certified DevOps Engineer specializing in Kubernetes, CI/CD, Terraform, and Cloud Infrastructure. Explore my terminal-style portfolio.">
+    <meta name="keywords" content="DevOps Engineer, Cloud Engineer, AWS, Kubernetes, Docker, Terraform, Jenkins, ArgoCD, Site Reliability Engineer, Adnan Pathan">
+    <meta name="author" content="Adnan Pathan">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (LinkedIn, Facebook, WhatsApp) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ADNAN PATHAN | DevOps Engineer">
+    <meta property="og:description" content="AWS-Certified DevOps Engineer | Kubernetes | CI/CD | Terraform | Cloud Architect — Interactive Terminal Portfolio">
+    <meta property="og:url" content="https://adnanpathan-portfolio.netlify.app/">
+    <meta property="og:image" content="https://adnanpathan-portfolio.netlify.app/preview.png">
+    <meta property="og:site_name" content="Adnan Pathan Portfolio">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ADNAN PATHAN | DevOps Engineer">
+    <meta name="twitter:description" content="AWS-Certified DevOps Engineer | Kubernetes | CI/CD | Terraform | Interactive Terminal Portfolio">
+    <meta name="twitter:image" content="https://adnanpathan-portfolio.netlify.app/preview.png">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://adnanpathan-portfolio.netlify.app/">
+
+    <!-- Favicon (terminal emoji fallback) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- Background -->
+    <!-- ===================== Boot Screen ===================== -->
+    <div class="boot-screen" id="bootScreen">
+        <div class="boot-content" id="bootContent"></div>
+        <div class="boot-cursor" id="bootCursor">█</div>
+    </div>
+
+    <!-- ===================== Background ===================== -->
     <canvas class="matrix-bg" id="matrixCanvas"></canvas>
     <div class="particles"></div>
 
-    <div class="terminal-container">
+    <!-- ===================== Main Terminal ===================== -->
+    <div class="terminal-container" id="terminalContainer" style="display:none;">
 
         <!-- Terminal Window Header -->
         <div class="terminal-header">
@@ -70,7 +104,7 @@
             <input
                 type="text"
                 id="commandInput"
-                placeholder="Enter command..."
+                placeholder="Enter command... (Tab to autocomplete)"
                 autofocus
                 autocomplete="off"
                 spellcheck="false"
