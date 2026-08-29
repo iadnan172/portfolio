@@ -89,6 +89,70 @@
     --matrix-color: #88C0D0;
 }
 
+[data-theme="catppuccin"] {
+    --bg-primary: #1E1E2E;
+    --bg-secondary: rgba(24, 24, 37, 0.97);
+    --terminal-green: #A6E3A1;
+    --terminal-green-dim: rgba(166, 227, 161, 0.75);
+    --terminal-orange: #FAB387;
+    --terminal-red: #F38BA8;
+    --terminal-blue: #89B4FA;
+    --terminal-yellow: #F9E2AF;
+    --glass-bg: rgba(30, 30, 46, 0.88);
+    --glass-border: rgba(137, 180, 250, 0.25);
+    --glow-color: rgba(137, 180, 250, 0.10);
+    --glow-color-strong: rgba(166, 227, 161, 0.22);
+    --matrix-color: #A6E3A1;
+}
+
+[data-theme="tokyonight"] {
+    --bg-primary: #1A1B26;
+    --bg-secondary: rgba(22, 22, 30, 0.97);
+    --terminal-green: #9ECE6A;
+    --terminal-green-dim: rgba(158, 206, 106, 0.75);
+    --terminal-orange: #FF9E64;
+    --terminal-red: #F7768E;
+    --terminal-blue: #7AA2F7;
+    --terminal-yellow: #E0AF68;
+    --glass-bg: rgba(26, 27, 38, 0.88);
+    --glass-border: rgba(122, 162, 247, 0.25);
+    --glow-color: rgba(122, 162, 247, 0.12);
+    --glow-color-strong: rgba(122, 162, 247, 0.25);
+    --matrix-color: #7AA2F7;
+}
+
+[data-theme="synthwave"] {
+    --bg-primary: #262335;
+    --bg-secondary: rgba(36, 27, 47, 0.97);
+    --terminal-green: #36F9F6;
+    --terminal-green-dim: rgba(54, 249, 246, 0.75);
+    --terminal-orange: #FF7ED6;
+    --terminal-red: #FE4450;
+    --terminal-blue: #72F1B8;
+    --terminal-yellow: #FFE67C;
+    --glass-bg: rgba(38, 35, 53, 0.88);
+    --glass-border: rgba(255, 126, 214, 0.3);
+    --glow-color: rgba(255, 126, 214, 0.15);
+    --glow-color-strong: rgba(54, 249, 246, 0.28);
+    --matrix-color: #FF7ED6;
+}
+
+[data-theme="onedark"] {
+    --bg-primary: #282C34;
+    --bg-secondary: rgba(33, 37, 43, 0.97);
+    --terminal-green: #98C379;
+    --terminal-green-dim: rgba(152, 195, 121, 0.75);
+    --terminal-orange: #D19A66;
+    --terminal-red: #E06C75;
+    --terminal-blue: #61AFEF;
+    --terminal-yellow: #E5C07B;
+    --glass-bg: rgba(40, 44, 52, 0.88);
+    --glass-border: rgba(97, 175, 239, 0.25);
+    --glow-color: rgba(97, 175, 239, 0.10);
+    --glow-color-strong: rgba(152, 195, 121, 0.20);
+    --matrix-color: #61AFEF;
+}
+
 /* ===================== BASE ===================== */
 html, body {
     width: 100%;
@@ -991,3 +1055,159 @@ body {
 
     .hero-line { font-size: 13px; }
 }
+
+/* ===================== MOBILE TOUCH QUICK BAR ===================== */
+.mobile-quick-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid var(--glass-border);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none; /* Firefox */
+}
+.mobile-quick-bar::-webkit-scrollbar { display: none; }
+
+.quick-pill {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--terminal-green);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+.quick-pill:hover, .quick-pill:active {
+    background: var(--glow-color-strong);
+    color: #FFF;
+    border-color: var(--terminal-green);
+    transform: translateY(-1px);
+}
+
+/* ===================== GIT GRAPH TREE ===================== */
+.git-graph-container {
+    font-family: inherit;
+    line-height: 1.5;
+    padding: 4px 0;
+}
+.git-commit-node {
+    margin-bottom: 12px;
+    border-left: 2px solid var(--terminal-green);
+    padding-left: 12px;
+    position: relative;
+}
+.git-commit-node::before {
+    content: "●";
+    color: var(--terminal-green);
+    position: absolute;
+    left: -7px;
+    top: 0;
+    font-size: 14px;
+    background: var(--bg-primary);
+}
+.git-hash {
+    color: var(--terminal-orange);
+    font-weight: bold;
+}
+.git-branch {
+    color: var(--terminal-blue);
+    background: rgba(0, 180, 216, 0.15);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    margin-left: 6px;
+}
+.git-author-date {
+    color: var(--terminal-green-dim);
+    font-size: 12px;
+}
+.git-commit-title {
+    color: #FFF;
+    font-weight: bold;
+    margin: 4px 0 2px 0;
+}
+
+/* ===================== DOCKER PS TABLE ===================== */
+.docker-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+.docker-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: inherit;
+    font-size: 13px;
+    margin-top: 6px;
+}
+.docker-table th {
+    text-align: left;
+    color: var(--terminal-blue);
+    border-bottom: 1px dashed var(--glass-border);
+    padding: 6px 8px;
+    font-weight: bold;
+}
+.docker-table td {
+    padding: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.docker-id { color: var(--terminal-orange); font-weight: bold; }
+.docker-image { color: var(--terminal-green); }
+.docker-status-up { color: var(--terminal-green); font-weight: bold; }
+.docker-port { color: var(--terminal-yellow); }
+
+/* ===================== BTOP / HTOP SYSTEM MONITOR ===================== */
+.btop-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.btop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+.btop-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+}
+.btop-card-title {
+    color: var(--terminal-blue);
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+.btop-meter-row {
+    margin-bottom: 6px;
+}
+.btop-meter-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+.btop-meter-track {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.btop-meter-fill {
+    height: 100%;
+    background: var(--terminal-green);
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btop-meter-fill.warning { background: var(--terminal-orange); }
+.btop-meter-fill.danger { background: var(--terminal-red); }
+

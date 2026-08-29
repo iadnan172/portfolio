@@ -98,7 +98,8 @@ function getMatrixColor() {
     const theme = document.documentElement.getAttribute('data-theme') || 'hacker';
     const colors = {
         hacker: '#00FF88', cyberpunk: '#FF00FF', matrix: '#39FF14',
-        dracula: '#50FA7B', nord: '#88C0D0'
+        dracula: '#50FA7B', nord: '#88C0D0',
+        catppuccin: '#A6E3A1', tokyonight: '#7AA2F7', synthwave: '#FF7ED6', onedark: '#61AFEF'
     };
     return colors[theme] || '#00FF88';
 }
@@ -583,10 +584,13 @@ async function showHelp() {
                 <span class="help-cmd">cd [folder]</span><span class="help-desc">Navigate: education | experience | projects | contact | skills</span>
                 <span class="help-cmd">cat [file]</span><span class="help-desc">View file contents (e.g. cat skills.txt)</span>
                 <span class="help-cmd">skills</span><span class="help-desc">Show animated skill progress bars</span>
+                <span class="help-cmd">git log --graph</span><span class="help-desc">Career & education history as git commit tree graph</span>
+                <span class="help-cmd">docker ps</span><span class="help-desc">Display active services & projects as running containers</span>
+                <span class="help-cmd">btop / htop</span><span class="help-desc">Interactive live CPU, RAM & skill resource monitor</span>
                 <span class="help-cmd">stats</span><span class="help-desc">Fetch live GitHub stats via API</span>
                 <span class="help-cmd">resume / cv</span><span class="help-desc">Directly download my resume PDF</span>
-                <span class="help-cmd">theme --list</span><span class="help-desc">List available color themes</span>
-                <span class="help-cmd">theme [name]</span><span class="help-desc">Switch theme: hacker | cyberpunk | matrix | dracula | nord</span>
+                <span class="help-cmd">theme --list</span><span class="help-desc">List available color themes (9 themes)</span>
+                <span class="help-cmd">theme [name]</span><span class="help-desc">Switch theme: hacker | catppuccin | tokyonight | synthwave | onedark | nord...</span>
                 <span class="help-cmd">send-message / email</span><span class="help-desc">Send me a message directly from the terminal</span>
                 <span class="help-cmd">ssh adnan</span><span class="help-desc">Simulate SSH connection (easter egg 🥚)</span>
                 <span class="help-cmd">ping adnan</span><span class="help-desc">Simulate network ping & open Gmail compose</span>
@@ -595,7 +599,7 @@ async function showHelp() {
                 <span class="help-cmd">clear / cls</span><span class="help-desc">Clear screen output buffer</span>
                 <span class="help-cmd">help</span><span class="help-desc">Show this command menu</span>
             </div>
-            <div class="output-paragraph" style="margin-top: 10px;">💡 Tip: Press <span class="command-text">Tab</span> to autocomplete | <span class="command-text">↑↓</span> to browse history</div>
+            <div class="output-paragraph" style="margin-top: 10px;">💡 Tip: Press <span class="command-text">Tab</span> to autocomplete | <span class="command-text">↑↓</span> to browse history | Tap top pills on mobile</div>
         </div>
     `;
     appendOutputElement(block);
@@ -792,6 +796,152 @@ async function showResume() {
         bar.style.width = current + '%';
         pct.textContent = Math.floor(current) + '%';
     }, 80);
+}
+
+// ===================== COMMAND: git log --graph =====================
+async function showGitLogGraph() {
+    await showLoading();
+    const block = document.createElement('div');
+    block.className = 'output-block';
+    block.innerHTML = `
+        <div class="output-title">🌿 GIT REPOSITORY LOG & CAREER GRAPH</div>
+        <div class="timeline-card git-graph-container">
+            <div class="git-commit-node">
+                <div><span class="git-hash">* commit 8a9f2e1</span> <span class="git-branch">(HEAD -> main, origin/main)</span></div>
+                <div class="git-author-date">Author: Adnan Pathan &lt;work.adnanpathan@gmail.com&gt; | 2025 - Present</div>
+                <div class="git-commit-title">feat(experience): DevOps Engineer at Devlogic Solutions</div>
+                <div class="output-paragraph">• Deployed ALB, EC2, VPCs, IAM security policies, and AWS EKS clusters.</div>
+                <div class="output-paragraph">• Configured Prometheus/Grafana monitoring and automated S3 backup pipelines.</div>
+            </div>
+
+            <div class="git-commit-node">
+                <div><span class="git-hash">* commit 4c3d2b1</span> <span class="git-branch">(tag: v2.0-degree)</span></div>
+                <div class="git-author-date">Author: Adnan Pathan &lt;work.adnanpathan@gmail.com&gt; | 2022 - 2025</div>
+                <div class="git-commit-title">feat(education): Bsc. Computer Science — SPPU Pune</div>
+                <div class="output-paragraph">• Graduated with 8.9 / 10 CGPA. Focused on Cloud Architecture & Network Security.</div>
+            </div>
+
+            <div class="git-commit-node">
+                <div><span class="git-hash">* commit 1a2b3c4</span> <span class="git-branch">(tag: v1.0-genesis)</span></div>
+                <div class="git-author-date">Author: Adnan Pathan &lt;work.adnanpathan@gmail.com&gt; | 2022</div>
+                <div class="git-commit-title">initial commit: Initialized DevOps & Linux journey</div>
+            </div>
+        </div>
+    `;
+    appendOutputElement(block);
+}
+
+// ===================== COMMAND: docker ps =====================
+async function showDockerContainers() {
+    await showLoading();
+    const block = document.createElement('div');
+    block.className = 'output-block';
+    block.innerHTML = `
+        <div class="output-title">🐳 DOCKER CONTAINERS — ACTIVE SERVICES</div>
+        <div class="timeline-card">
+            <div class="docker-table-wrapper">
+                <table class="docker-table">
+                    <thead>
+                        <tr>
+                            <th>CONTAINER ID</th>
+                            <th>IMAGE</th>
+                            <th>COMMAND</th>
+                            <th>STATUS</th>
+                            <th>PORTS</th>
+                            <th>NAMES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="docker-id">a8f9102c4b</td>
+                            <td class="docker-image">adnan/devlogic-infra:v2.5</td>
+                            <td>"terraform apply"</td>
+                            <td class="docker-status-up">Up 3 months (healthy)</td>
+                            <td class="docker-port">80/tcp, 443/tcp</td>
+                            <td>devlogic-sre-prod</td>
+                        </tr>
+                        <tr>
+                            <td class="docker-id">b4c129e71d</td>
+                            <td class="docker-image">adnan/eks-microservices:v1.8</td>
+                            <td>"kubectl run"</td>
+                            <td class="docker-status-up">Up 1 month (healthy)</td>
+                            <td class="docker-port">8080-&gt;8080/tcp</td>
+                            <td>aws-eks-cluster</td>
+                        </tr>
+                        <tr>
+                            <td class="docker-id">c7d341a90f</td>
+                            <td class="docker-image">adnan/cicd-jenkins-argocd:v3.0</td>
+                            <td>"jenkins-runner"</td>
+                            <td class="docker-status-up">Up 2 weeks (healthy)</td>
+                            <td class="docker-port">9090-&gt;9090/tcp</td>
+                            <td>cicd-pipeline</td>
+                        </tr>
+                        <tr>
+                            <td class="docker-id">d1e5678b2a</td>
+                            <td class="docker-image">adnan/ids-cybersec-app:v1.2</td>
+                            <td>"python app.py"</td>
+                            <td class="docker-status-up">Up 5 days</td>
+                            <td class="docker-port">5000-&gt;5000/tcp</td>
+                            <td>ids-scapy-security</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="output-paragraph" style="margin-top:10px;">💡 All containers deployed on AWS EKS with automated health checks.</div>
+        </div>
+    `;
+    appendOutputElement(block);
+}
+
+// ===================== COMMAND: btop / htop =====================
+async function showBtopMonitor() {
+    await showLoading();
+    const block = document.createElement('div');
+    block.className = 'output-block';
+    block.innerHTML = `
+        <div class="output-title">📊 SYSTEM RESOURCE MONITOR (BTOP v1.2.6)</div>
+        <div class="timeline-card btop-container">
+            <div class="btop-grid">
+                <div class="btop-card">
+                    <div class="btop-card-title"><span>⚡ CPU LOAD</span><span id="cpuVal">24%</span></div>
+                    <div class="btop-meter-row">
+                        <div class="btop-meter-header"><span>Core 0 (AWS EC2)</span><span>18%</span></div>
+                        <div class="btop-meter-track"><div class="btop-meter-fill" style="width: 18%;"></div></div>
+                    </div>
+                    <div class="btop-meter-row">
+                        <div class="btop-meter-header"><span>Core 1 (K8s Worker)</span><span>32%</span></div>
+                        <div class="btop-meter-track"><div class="btop-meter-fill" style="width: 32%;"></div></div>
+                    </div>
+                </div>
+
+                <div class="btop-card">
+                    <div class="btop-card-title"><span>🧠 MEMORY ALLOCATION</span><span>4.2 / 16.0 GB</span></div>
+                    <div class="btop-meter-row">
+                        <div class="btop-meter-header"><span>Kubernetes Pods</span><span>45%</span></div>
+                        <div class="btop-meter-track"><div class="btop-meter-fill" style="width: 45%;"></div></div>
+                    </div>
+                    <div class="btop-meter-row">
+                        <div class="btop-meter-header"><span>Docker Containers</span><span>28%</span></div>
+                        <div class="btop-meter-track"><div class="btop-meter-fill" style="width: 28%;"></div></div>
+                    </div>
+                </div>
+
+                <div class="btop-card">
+                    <div class="btop-card-title"><span>🔥 CORE SKILLS LOAD</span><span>100% ACTIVE</span></div>
+                    <div class="btop-meter-row">
+                        <div class="btop-meter-header"><span>AWS &amp; Kubernetes</span><span>92%</span></div>
+                        <div class="btop-meter-track"><div class="btop-meter-fill" style="width: 92%;"></div></div>
+                    </div>
+                    <div class="btop-meter-row">
+                        <div class="btop-meter-header"><span>Terraform &amp; CI/CD</span><span>88%</span></div>
+                        <div class="btop-meter-track"><div class="btop-meter-fill" style="width: 88%;"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="output-paragraph" style="margin-top:6px;">🚀 Status: <strong>All Infrastructure Systems Nominal</strong></div>
+        </div>
+    `;
+    appendOutputElement(block);
 }
 
 // ===================== COMMAND: ssh adnan (Feature 4 — Easter Egg) =====================
@@ -993,7 +1143,7 @@ async function handleSendMessageStep(value) {
 // ===================== COMMAND: theme (Feature 7) =====================
 async function handleTheme(args) {
     await showLoading();
-    const themes = ['hacker', 'cyberpunk', 'matrix', 'dracula', 'nord'];
+    const themes = ['hacker', 'cyberpunk', 'matrix', 'dracula', 'nord', 'catppuccin', 'tokyonight', 'synthwave', 'onedark'];
 
     if (!args || args === '--list') {
         const block = document.createElement('div');
@@ -1007,8 +1157,12 @@ async function handleTheme(args) {
                     <span class="help-cmd">matrix</span><span class="help-desc">🔮 Bright neon green matrix style</span>
                     <span class="help-cmd">dracula</span><span class="help-desc">🧛 Dracula dark purple & teal</span>
                     <span class="help-cmd">nord</span><span class="help-desc">❄️ Cool arctic blue & grey</span>
+                    <span class="help-cmd">catppuccin</span><span class="help-desc">🐱 Soft pastel lavender & mocha</span>
+                    <span class="help-cmd">tokyonight</span><span class="help-desc">🌃 Tokyo night neon blue</span>
+                    <span class="help-cmd">synthwave</span><span class="help-desc">🕶️ Synthwave '84 neon glow</span>
+                    <span class="help-cmd">onedark</span><span class="help-desc">💻 One Dark Pro Atom style</span>
                 </div>
-                <div class="output-paragraph" style="margin-top:8px;">Usage: <span class="command-text">theme cyberpunk</span></div>
+                <div class="output-paragraph" style="margin-top:8px;">Usage: <span class="command-text">theme catppuccin</span></div>
             </div>
         `;
         appendOutputElement(block);
@@ -1029,10 +1183,10 @@ async function handleTheme(args) {
 
     const block = document.createElement('div');
     block.className = 'output-block';
-    const themeEmojis = { hacker: '⚡', cyberpunk: '🌆', matrix: '🔮', dracula: '🧛', nord: '❄️' };
+    const themeEmojis = { hacker: '⚡', cyberpunk: '🌆', matrix: '🔮', dracula: '🧛', nord: '❄️', catppuccin: '🐱', tokyonight: '🌃', synthwave: '🕶️', onedark: '💻' };
     block.innerHTML = `
         <div class="timeline-card">
-            <div class="success">${themeEmojis[theme]} Switching to <strong>${theme.toUpperCase()}</strong> theme... Done!</div>
+            <div class="success">${themeEmojis[theme] || '🎨'} Switching to <strong>${theme.toUpperCase()}</strong> theme... Done!</div>
             <div class="output-text">Theme preference saved for next visit.</div>
         </div>
     `;
@@ -1163,6 +1317,22 @@ async function processCommand(commandStr) {
             await showNeofetch();
             break;
 
+        case command === 'git log --graph' || command === 'git log' || command === 'git':
+            await showGitLogGraph();
+            break;
+
+        case command === 'docker ps' || command === 'docker' || command === 'containers':
+            await showDockerContainers();
+            break;
+
+        case command === 'btop' || command === 'htop' || command === 'system-monitor' || command === 'top':
+            await showBtopMonitor();
+            break;
+
+        case command === 'k8s' || command === 'kubectl' || command === 'kubectl get pods':
+            await showProjects();
+            break;
+
         case command === 'matrix': {
             const matrixCanvas = document.getElementById('matrixCanvas');
             const isHidden = matrixCanvas.style.display === 'none';
@@ -1188,7 +1358,9 @@ const ALL_COMMANDS = [
     'whois adnan', 'about', 'ls', 'skills', 'stats', 'resume', 'cv', 'download-resume',
     'send-message', 'email', 'mail', 'message', 'ssh adnan', 'ssh', 'ping adnan', 'ping',
     'neofetch', 'matrix', 'clear', 'cls', 'help',
+    'git log --graph', 'git log', 'docker ps', 'docker', 'btop', 'htop', 'k8s', 'kubectl',
     'theme --list', 'theme hacker', 'theme cyberpunk', 'theme matrix', 'theme dracula', 'theme nord',
+    'theme catppuccin', 'theme tokyonight', 'theme synthwave', 'theme onedark',
     'cd education', 'cd experience', 'cd projects', 'cd contact', 'cd skills',
     'cat skills.txt', 'cat education.txt', 'cat experience.txt', 'cat projects.txt', 'cat contact.txt'
 ];
@@ -1236,6 +1408,24 @@ commandInput.addEventListener('keydown', function(e) {
         const value = commandInput.value.toLowerCase();
         const match = ALL_COMMANDS.find(cmd => cmd.startsWith(value) && cmd !== value);
         if (match) commandInput.value = match;
+    }
+});
+
+// Mobile Touch Quick Bar button handler
+document.addEventListener('DOMContentLoaded', () => {
+    const quickBar = document.getElementById('quickBar');
+    if (quickBar) {
+        quickBar.addEventListener('click', (e) => {
+            const pill = e.target.closest('.quick-pill');
+            if (pill) {
+                const cmd = pill.getAttribute('data-cmd');
+                if (cmd) {
+                    commandInput.value = cmd;
+                    processCommand(cmd);
+                    commandInput.value = '';
+                }
+            }
+        });
     }
 });
 

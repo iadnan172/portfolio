@@ -11,7 +11,7 @@ while ($listener.IsListening) {
     $path = $request.Url.LocalPath
     if ($path -eq "/") { $path = "/index.html" }
     
-    $filePath = Join-Path "C:\Users\samee\.gemini\antigravity\scratch\terminal-portfolio" $path.TrimStart('/')
+    $filePath = Join-Path $PSScriptRoot $path.TrimStart('/')
     
     if (Test-Path $filePath -PathType Leaf) {
         $bytes = [System.IO.File]::ReadAllBytes($filePath)
