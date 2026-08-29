@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang="en">
   <head>
@@ -5,15 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ADNAN PATHAN | DevOps Engineer</title>
 
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADNAN PATHAN | DevOps Engineer</title>
+
+    <!-- ===================== SEO / Open Graph Meta Tags ===================== -->
+>>>>>>> 1376df9aa0950af35d543a6d7392862d615753f0
     <meta name="description" content="Adnan Pathan — AWS-Certified DevOps Engineer specializing in Kubernetes, CI/CD, Terraform, and Cloud Infrastructure. Explore my terminal-style portfolio.">
     <meta name="keywords" content="DevOps Engineer, Cloud Engineer, AWS, Kubernetes, Docker, Terraform, Jenkins, ArgoCD, Site Reliability Engineer, Adnan Pathan">
     <meta name="author" content="Adnan Pathan">
     <meta name="robots" content="index, follow">
 
+<<<<<<< HEAD
+=======
+    <!-- Open Graph (LinkedIn, Facebook, WhatsApp) -->
+>>>>>>> 1376df9aa0950af35d543a6d7392862d615753f0
     <meta property="og:type" content="website">
     <meta property="og:title" content="ADNAN PATHAN | DevOps Engineer">
     <meta property="og:description" content="AWS-Certified DevOps Engineer | Kubernetes | CI/CD | Terraform | Cloud Architect — Interactive Terminal Portfolio">
     <meta property="og:url" content="https://adnanpathan-portfolio.netlify.app/">
+<<<<<<< HEAD
     <meta property="og:site_name" content="Adnan Pathan Portfolio">
 
     <meta name="twitter:card" content="summary_large_image">
@@ -27,4 +43,134 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
+=======
+    <meta property="og:image" content="https://adnanpathan-portfolio.netlify.app/preview.png">
+    <meta property="og:site_name" content="Adnan Pathan Portfolio">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ADNAN PATHAN | DevOps Engineer">
+    <meta name="twitter:description" content="AWS-Certified DevOps Engineer | Kubernetes | CI/CD | Terraform | Interactive Terminal Portfolio">
+    <meta name="twitter:image" content="https://adnanpathan-portfolio.netlify.app/preview.png">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://adnanpathan-portfolio.netlify.app/">
+
+    <!-- Favicon (terminal emoji fallback) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ===================== Boot Screen ===================== -->
+    <div class="boot-screen" id="bootScreen">
+        <div class="boot-content" id="bootContent"></div>
+        <div class="boot-cursor" id="bootCursor">█</div>
+    </div>
+
+    <!-- ===================== Background ===================== -->
+    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+    <div class="particles"></div>
+
+    <!-- ===================== Main Terminal ===================== -->
+    <div class="terminal-container" id="terminalContainer" style="display:none;">
+
+        <!-- Terminal Window Header -->
+        <div class="terminal-header">
+            <div class="window-controls">
+                <div class="control close"></div>
+                <div class="control minimize"></div>
+                <div class="control maximize"></div>
+            </div>
+
+            <div class="terminal-title">
+                adnan@portfolio:~$
+            </div>
+
+            <div class="status-indicators">
+                <button class="sound-toggle-btn" id="soundToggle" title="Toggle Typing Sound" aria-label="Toggle Typing Sound">
+                    <span class="sound-icon" id="soundIcon">🔊</span>
+                </button>
+                <span class="status-secure-text">SECURE</span>
+                <div class="status-dot active"></div>
+            </div>
+        </div>
+
+        <!-- Terminal Main Scrollable Body -->
+        <div class="terminal-body" id="terminalBody">
+            <div class="scanline"></div>
+
+            <!-- Initial Hero / Welcome Banner inside scroll container -->
+            <div class="terminal-hero" id="terminalHero">
+                <div class="ascii-art-wrapper">
+                    <pre class="ascii-art" id="asciiArt"></pre>
+                </div>
+
+                <div class="hero-text-block">
+                    <div class="output-text hero-line">
+                        ⚡ Welcome to <span class="highlight">ADNAN PATHAN's</span> Terminal Portfolio
+                    </div>
+                    <div class="output-text hero-line">
+                        🎯 <span class="info-text">DevOps Engineer</span> | <span class="warning-text">Cloud Engineer</span> | <span class="error-text">Site Reliability Engineer</span>
+                    </div>
+                    <div class="hero-instructions">
+                        <div class="output-text">Type <span class="command-text">'whois adnan'</span> to know more about me</div>
+                        <div class="output-text">Type <span class="command-text">'help'</span> for available commands</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Command Outputs -->
+            <div id="terminalOutput"></div>
+        </div>
+
+        <!-- Mobile Touch Quick Bar -->
+        <div class="mobile-quick-bar" id="quickBar">
+            <button class="quick-pill" data-cmd="whois adnan">whois</button>
+            <button class="quick-pill" data-cmd="skills">skills</button>
+            <button class="quick-pill" data-cmd="cd projects">projects</button>
+            <button class="quick-pill" data-cmd="k8s">k8s</button>
+            <button class="quick-pill" data-cmd="resume">resume</button>
+            <button class="quick-pill" data-cmd="git log --graph">git log</button>
+            <button class="quick-pill" data-cmd="docker ps">docker ps</button>
+            <button class="quick-pill" data-cmd="btop">btop</button>
+        </div>
+
+        <!-- Fixed Input Area -->
+        <div class="input-area">
+            <span class="input-prompt">adnan@portfolio:~$</span>
+            <input
+                type="text"
+                id="commandInput"
+                placeholder="Enter command... (Tab to autocomplete)"
+                autofocus
+                autocomplete="off"
+                spellcheck="false"
+            >
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                🔒 SSH: Connected
+            </div>
+            <div class="status-item">
+                🐳 Docker: Running
+            </div>
+            <div class="status-item">
+                ☸️ K8s: Active
+            </div>
+            <div class="status-item">
+                🕐 <span id="currentTime"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+>>>>>>> 1376df9aa0950af35d543a6d7392862d615753f0
 </html>
