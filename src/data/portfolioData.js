@@ -54,6 +54,19 @@ export const portfolioData = {
       stars: "⭐⭐⭐⭐⭐"
     },
     {
+      name: "OpsForge – GitOps-Based Internal Developer Platform ",
+      desc: [
+        "Built a GitOps-based platform to automate service provisioning, deployment configuration, and infrastructure changes.",
+        "Used Terraform to manage AWS infrastructure including EKS, ECR, IAM, networking, and environment-specific resources.",
+        "Configured Argo CD ApplicationSets and Helm charts to manage application deployments through Git-based release workflows.",
+        "Added Kubernetes network policies, resource limits, health probes, autoscaling, and Pod Disruption Budgets.",
+        "Integrated Prometheus, Grafana, External Secrets, Route 53, and cert-manager for monitoring, secrets, DNS, and TLS"
+      ],
+      tech: ["Terraform", "AWS", "Kubernetes", "Argo CD", "Helm", "Backstage",],
+      github: "https://github.com/iadnan172/gitops-platform.git",
+      stars: "⭐⭐⭐⭐⭐"
+    },
+    {
       name: "Real-Time Chat Application",
       desc: [
         "Designed and developed a real-time chat application using Node.js, Socket.IO, MySQL, Redis, HTML, CSS, and JavaScript.",
@@ -88,7 +101,7 @@ export const portfolioData = {
   ]
 };
 
-export const RESUME_URL = "/DEVOPS_ADNAN_PATHAN_RESUME.pdf";
+export const RESUME_URL = "/ADNAN_PATHAN_DEVOPS_1_5_RESUME.pdf";
 
 export const ALL_COMMANDS = [
   'whois adnan', 'about', 'ls', 'skills', 'stats', 'resume', 'cv', 'download-resume',
